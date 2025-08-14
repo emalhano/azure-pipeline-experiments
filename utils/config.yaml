@@ -1,0 +1,6 @@
+App config:
+
+  years: [2022, 2023, 2024, 2025]
+  tracks: ["Bahrain", "Saudi Arabia", "Australia", "China", "Miami", "Emilia Romagna", "Monaco", "Spain", "Canada", "Austria", "Great Britain", "Hungary", "Belgium", "Netherlands", "Italy", "Singapore", "Japan", "Qatar", "United States", "Mexico", "Brazil", "Las Vegas", "Abu Dhabi"]
+  sessions: ["FP1", "FP2", "FP3", "Qualifying", "Race"]
+  drivers: ["VER", "TSU", "LEC", "HAM", "ANT", "RUS", "NOR", "PIA", "ALO", "STR", "HUL", "BOR", "LAW", "HAD", "OCO", "BEA", "ALB", "SAI"]
