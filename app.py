@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 import dash
 import yaml
-from dash import dcc, Input, Output
+from dash import dcc, html, Input, Output
 
 from utils.functions import create_time_series_plot
 
@@ -16,6 +16,21 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Layout of the dashboard
 app.layout = dbc.Container([
+    dbc.Row([
+        dbc.Col([
+            html.H1(
+                "Experimental FastF1 App",
+                className="text-center mb-4",
+                style={
+                    "color": "#e10600",  # F1 red color
+                    "fontWeight": "bold",
+                    "textShadow": "2px 2px 4px rgba(0,0,0,0.3)",
+                    "marginTop": "20px",
+                    "fontFamily": "'Arial Black', sans-serif"
+                }
+            )
+        ], width=12)
+    ]),
     dbc.Row([
         dbc.Col([
             dcc.Dropdown(
