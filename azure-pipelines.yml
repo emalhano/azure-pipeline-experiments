@@ -1,41 +1,28 @@
-
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - main
 
 resources:
 - repo: self
 
-variables:
-  tag: '$(Build.BuildId)'
-
 stages:
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       name: 'eduardob-self-hosted'
-#     steps:
-#     - task: Docker@2
-#       displayName: Build Docker Image
-#       inputs:
-#         command: build
-#         repository: eduardobiten/eduardob-experimental
-#         tags: latest
-#         dockerfile: Dockerfile  # Ensure the Dockerfile is in the root directory
-#     - task: Docker@2
-#       displayName: Push Docker Image
-#       inputs:
-#         command: push
-#         repository: eduardobiten/eduardob-experimental
-#         tags: latest
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      name: 'eduardob-self-hosted'
+    steps:
+    - task: Docker@2
+      displayName: Build and push docker image
+      inputs:
+        command: buildAndPush
+        repository: eduardobiten/eduardob-experimental
+        tags: latest
+        dockerfile: Dockerfile
 
 - stage: Deploy
-  displayName: Run image
+  displayName: Deploy
   jobs:
   - job: Deploy
     displayName: Deploy
@@ -43,9 +30,12 @@ stages:
       name: 'eduardob-self-hosted'
     steps:
     - task: SSH@0
-      displayName: SSH and run
+      displayName: Run image on VM
       inputs:
         sshEndpoint: my-vm-connection
         runOptions: inline
         inline: |
-          echo "Hello world - $(Build.BuildId)"
+          sudo docker stop my-app
+          sudo docker rm my-app
+          sudo docker pull eduardobiten/eduardob-experimental:latest
+          sudo docker run -d -n my-app eduardobiten/eduardob-experimental:latest
