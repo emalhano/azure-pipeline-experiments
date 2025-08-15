@@ -38,4 +38,4 @@ stages:
           sudo docker stop my-app
           sudo docker rm my-app
           sudo docker pull eduardobiten/eduardob-experimental:latest
-          sudo docker run -d -n my-app eduardobiten/eduardob-experimental:latest
+          sudo docker run -d --name my-app eduardobiten/eduardob-experimental:latest
