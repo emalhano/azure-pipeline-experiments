@@ -64,7 +64,7 @@ app.layout = dbc.Container([
     ], className="mb-4"),  # Add margin-bottom for spacing
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id='plot-area')
+            dcc.Loading([dcc.Graph(id='plot-area')])
         ], width=12)
     ])
 ], fluid=True)  # Use fluid=True for responsive layout
