@@ -12,24 +12,40 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build image
+# - stage: Build
+#   displayName: Build image
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       name: 'eduardob-self-hosted'
+#     steps:
+#     - task: Docker@2
+#       displayName: Build Docker Image
+#       inputs:
+#         command: build
+#         repository: eduardobiten/eduardob-experimental
+#         tags: latest
+#         dockerfile: Dockerfile  # Ensure the Dockerfile is in the root directory
+#     - task: Docker@2
+#       displayName: Push Docker Image
+#       inputs:
+#         command: push
+#         repository: eduardobiten/eduardob-experimental
+#         tags: latest
+
+- stage: Deploy
+  displayName: Run image
   jobs:
-  - job: Build
-    displayName: Build
+  - job: Deploy
+    displayName: Deploy
     pool:
       name: 'eduardob-self-hosted'
     steps:
-    - task: Docker@2
-      displayName: Build Docker Image
+    - task: SSH@0
+      displayName: SSH and run
       inputs:
-        command: build
-        repository: eduardobiten/eduardob-experimental
-        tags: latest
-        dockerfile: Dockerfile  # Ensure the Dockerfile is in the root directory
-    - task: Docker@2
-      displayName: Push Docker Image
-      inputs:
-        command: push
-        repository: eduardobiten/eduardob-experimental
-        tags: latest
+        sshEndpoint: my-vm-connection
+        runOptions: inline
+        inline: |
+          echo "Hello world - $(Build.BuildId)"
